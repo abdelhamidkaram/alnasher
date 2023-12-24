@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listingapp/bloc/home_bloc/home_cubit.dart';
 import 'package:listingapp/bloc/login_bloc/login_cubit.dart';
 import 'package:listingapp/bloc/route/navigator_args/base_navegator_args.dart';
 import 'package:listingapp/bloc/route/navigator_args/send_email_args.dart';
@@ -86,7 +85,9 @@ class AppRoute {
 
       case AppRouteStrings.home:
         return MaterialPageRoute(
-          builder: (context) => const HomeScreen(),
+          builder: (context) {
+            return const HomeScreen();
+          },
         );
 
       case AppRouteStrings.search:
@@ -98,7 +99,7 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) {
             var args = routeSettings.arguments as SinglePostNavigationArgs;
-            return SinglePostScreen(ad:args.ad);
+            return SinglePostScreen(ad: args.ad);
           },
         );
 

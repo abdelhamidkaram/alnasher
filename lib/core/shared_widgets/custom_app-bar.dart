@@ -41,7 +41,7 @@ class _AppBarContentState extends State<AppBarContent> {
                   });
                 });
                 return Text(
-                  '${AppStrings.welcome} ${user?.firstName?? 'yy'}',
+                  '${AppStrings.welcome} ${user?.firstName?? ''}',
                   style: TextStyle(
                     fontSize: 16.sp,
                   ),

@@ -23,6 +23,7 @@ class ApiEndPoints{
 
   // fav =================================
   static String  fav = 'fav_ads';
+  static String  allFav = 'get_fav_ads';
 
 
 }

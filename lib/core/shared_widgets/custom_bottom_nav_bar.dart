@@ -5,28 +5,36 @@ import 'package:listingapp/bloc/home_bloc/home_cubit.dart';
 import '../app_colors.dart';
 import '../utils/assets_manger.dart';
 
-class CustomBottomNavBar extends StatelessWidget {
+class CustomBottomNavBar extends StatefulWidget {
   const CustomBottomNavBar({
     super.key,
-    required this.currentIndex,
   });
 
-  final int currentIndex;
 
   @override
+  State<CustomBottomNavBar> createState() => _CustomBottomNavBarState();
+}
+
+class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
+  @override
   Widget build(BuildContext context) {
+    int current = HomeCubit
+        .get(context)
+        .currentIndex;
     return BlocListener<HomeCubit, HomeState>(
       listener: (context, state) => HomeCubit(),
       child: BottomNavigationBar(
-        onTap: (value) =>
-            HomeCubit.get(context).changeCurrentIndexForNavBar(value),
-        currentIndex: currentIndex,
+        onTap: (value) => setState(() {
+          current = value;
+          HomeCubit.get(context).changeCurrentIndexForNavBar(value);
+        }),
+        currentIndex: current,
         items: [
           BottomNavigationBarItem(
             icon: Image.asset(
               ImagesManger.homeIcon,
               color:
-              currentIndex == 0 ? AppColors.green : AppColors.primaryColor,
+              current == 0 ? AppColors.green : AppColors.primaryColor,
               width: 24.h,
               height: 24.h,
             ),
@@ -36,7 +44,7 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Image.asset(
               ImagesManger.adsIcon,
               color:
-              currentIndex == 1 ? AppColors.green : AppColors.primaryColor,
+              current == 1 ? AppColors.green : AppColors.primaryColor,
               width: 24.h,
               height: 24.h,
             ),
@@ -46,7 +54,7 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Image.asset(
               ImagesManger.addIcon,
               color:
-              currentIndex == 2 ? AppColors.green : AppColors.primaryColor,
+              current == 2 ? AppColors.green : AppColors.primaryColor,
               width: 24.h,
               height: 24.h,
             ),
@@ -56,7 +64,7 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Image.asset(
               ImagesManger.searchIcon,
               color:
-              currentIndex == 3 ? AppColors.green : AppColors.primaryColor,
+              current == 3 ? AppColors.green : AppColors.primaryColor,
               width: 24.h,
               height: 24.h,
             ),
@@ -66,7 +74,7 @@ class CustomBottomNavBar extends StatelessWidget {
             icon: Image.asset(
               ImagesManger.account,
               color:
-              currentIndex == 4 ? AppColors.green : AppColors.primaryColor,
+              current == 4 ? AppColors.green : AppColors.primaryColor,
               width: 24.h,
               height: 24.h,
             ),

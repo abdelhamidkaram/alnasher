@@ -15,3 +15,7 @@ class GetHomeError extends HomeState {}
 class ChangNavBareSuccess extends HomeState {}
 class ChangNavBareLoading extends HomeState {}
 class ChangNavBareError extends HomeState {}
+
+class ChangeFavLoading extends HomeState{}
+class ChangeFavFinishCall extends HomeState{}
+class ChangeFavError extends HomeState{}

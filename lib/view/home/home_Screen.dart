@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:listingapp/bloc/home_bloc/home_cubit.dart';
 import 'package:listingapp/core/app_colors.dart';
@@ -18,84 +17,80 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
-
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => HomeCubit()..getHomeResponse(),
-      child: BlocConsumer<HomeCubit, HomeState>(
-        builder: (context, state) {
-          List<HomeCategory> cats = HomeCubit.get(context).categories;
-          List<Ad> ads = HomeCubit.get(context).ads;
-          List<HomeBanner> banners = HomeCubit.get(context).banners;
-          int currentIndex = HomeCubit.get(context).currentIndex;
-          return Scaffold(
-            appBar: customAppBar(),
-            bottomNavigationBar: CustomBottomNavBar(currentIndex: currentIndex),
-            body: PageView(
-              controller: PageController(
-                  initialPage: HomeCubit.get(context).currentIndex),
-              onPageChanged: (value) =>
-                  HomeCubit.get(context).changeCurrentIndexForNavBar(value),
+    List<HomeCategory> cats = HomeCubit.get(context).categories;
+    List<Ad> ads = HomeCubit.get(context).ads;
+    List<HomeBanner> banners = HomeCubit.get(context).banners;
+    return Scaffold(
+      appBar: customAppBar(),
+      bottomNavigationBar:  const CustomBottomNavBar(),
+      body: PageView(
+        allowImplicitScrolling: false,
+        physics: const NeverScrollableScrollPhysics(),
+        controller:HomeCubit.get(context).pageController,
+        onPageChanged: (value) =>
+            setState(() {
+              HomeCubit.get(context).changeCurrentIndexForNavBar(value);
+            }),
+        children: [
+          SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                SingleChildScrollView(
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(horizontal: 8.0),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            bannerView(banners),
-                            titleView(),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            categoriesListView(cats),
-                            SizedBox(
-                              height: 5.h,
-                            ),
-                            SizedBox(
-                                height: 192.h,
-                                child: adsListView(ads),
-                            ),
-                            ...List.generate(cats.length, (index) => Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                titleView(title: cats[index].name),
-                                SizedBox(
-                                  height: 192.h,
-                                  child: adsListView(cats[index].ads!),
-                                ),
-                              ],
-                            )),
-                          ],
-                        ),
+                      bannerView(banners),
+                      titleView(),
+                      SizedBox(
+                        height: 5.h,
                       ),
+                      categoriesListView(cats),
+                      SizedBox(
+                        height: 5.h,
+                      ),
+                      SizedBox(
+                        height: 192.h,
+                        child: adsListView(ads),
+                      ),
+                      ...List.generate(
+                          cats.length,
+                          (index) => Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  titleView(title: cats[index].name),
+                                  SizedBox(
+                                    height: 192.h,
+                                    child: adsListView(cats[index].ads!),
+                                  ),
+                                ],
+                              )),
                     ],
                   ),
                 ),
-                Text('data11'),
-                Text('data1222'),
-                Text('data1333'),
-                Text('data114444'),
               ],
             ),
-          );
-        },
-        listener: (context, state) => HomeCubit(),
+          ),
+          const Text('data11'),
+          const Text('data1222'),
+          const Text('data1333'),
+          const Text('data114444'),
+        ],
       ),
     );
   }
 
   ListView adsListView(List<Ad> ads) {
     return ListView.separated(
-       itemCount: ads.length,
+      itemCount: ads.length,
       itemBuilder: (context, index) => AdsItemBuilder(ad: ads[index]),
-      separatorBuilder: (context, index) => SizedBox(width: 10.w,),
+      separatorBuilder: (context, index) => SizedBox(
+        width: 10.w,
+      ),
       scrollDirection: Axis.horizontal,
     );
   }
@@ -104,7 +99,7 @@ class _HomeScreenState extends State<HomeScreen> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 18.0, vertical: 10.0),
       child: Text(
-        title ?? 'بعض الأقسام المقترحة ' ,
+        title ?? 'بعض الأقسام المقترحة ',
         style: Theme.of(context)
             .textTheme
             .titleMedium!
@@ -146,4 +141,3 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 }
-
