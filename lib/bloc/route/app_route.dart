@@ -1,32 +1,46 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:listingapp/bloc/login_bloc/login_cubit.dart';
-import 'package:listingapp/bloc/route/navigator_args/base_navegator_args.dart';
-import 'package:listingapp/bloc/route/navigator_args/send_email_args.dart';
-import 'package:listingapp/bloc/route/navigator_args/single_post_navigation_args.dart';
-import 'package:listingapp/view/auth/login.dart';
-import 'package:listingapp/view/auth/register.dart';
-import 'package:listingapp/view/auth/reset_password.dart';
-import 'package:listingapp/view/auth/verify_code.dart';
-import 'package:listingapp/view/auth/sender.dart';
-import 'package:listingapp/view/home/home_Screen.dart';
-import 'package:listingapp/view/search/search_screen.dart';
-import 'package:listingapp/view/sigle_post/single_post_screen.dart';
+import 'package:alnsher/bloc/login_bloc/login_cubit.dart';
+import 'package:alnsher/bloc/route/navigator_args/base_navegator_args.dart';
+import 'package:alnsher/bloc/route/navigator_args/send_email_args.dart';
+import 'package:alnsher/bloc/route/navigator_args/single_post_navigation_args.dart';
+import 'package:alnsher/view/auth/login.dart';
+import 'package:alnsher/view/auth/register.dart';
+import 'package:alnsher/view/auth/reset_password.dart';
+import 'package:alnsher/view/auth/verify_code.dart';
+import 'package:alnsher/view/auth/sender.dart';
+import 'package:alnsher/view/home/home_Screen.dart';
+import 'package:alnsher/view/profile/my_ads.dart';
+import 'package:alnsher/view/profile/policy_screen.dart';
+import 'package:alnsher/view/search/search_screen.dart';
+import 'package:alnsher/view/sigle_post/single_post_screen.dart';
 
+import '../../view/profile/about_screen.dart';
+import '../../view/profile/fav_screen.dart';
+import '../../view/profile/support_screen.dart';
 import '../../view/welcome/welcome.dart';
 
 class AppRouteStrings {
   static const String initial = "/";
+  //Auth
   static const String welcome = "/welcome";
   static const String login = "/login";
   static const String register = "/register";
   static const String sendEmail = "/sendEmail";
+
+  //Home
   static const String home = "/home";
   static const String resetPassword = "/resetPassword";
   static const String verify = "/verify";
   static const String search = "/search";
-
   static const String singlePost = "/singlePost";
+
+  // Profile
+  static const String fav = "/vaf";
+  static const String policy = "/policy";
+  static const String aboutUs = "/aboutUs";
+  static const String suport = "/suport";
+  static const String myAds = "/myAds";
 }
 
 class AppRoute {
@@ -36,7 +50,7 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) => const WelcomeScreen(),
         );
-
+//Auth
       case AppRouteStrings.login:
         return MaterialPageRoute(
           builder: (context) => BlocProvider(
@@ -83,6 +97,7 @@ class AppRoute {
           },
         );
 
+//Home
       case AppRouteStrings.home:
         return MaterialPageRoute(
           builder: (context) {
@@ -100,6 +115,42 @@ class AppRoute {
           builder: (context) {
             var args = routeSettings.arguments as SinglePostNavigationArgs;
             return SinglePostScreen(ad: args.ad);
+          },
+        );
+
+//Profile
+
+        case AppRouteStrings.myAds:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const MyAds();
+          },
+        );
+
+        case AppRouteStrings.fav:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const MyFavScreen();
+          },
+        );
+
+        case AppRouteStrings.policy:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const PolicyScreen();
+          },
+        );
+        case AppRouteStrings.aboutUs:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const AboutUsScreen();
+          },
+        );
+
+        case AppRouteStrings.suport:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const SuportScreen();
           },
         );
 

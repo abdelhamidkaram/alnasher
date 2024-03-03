@@ -68,13 +68,13 @@ class DioHelper {
   static Future<Response> postData(
       {required String endpoint,
         Map<String, dynamic>? queryParameters,
-        Map<String, dynamic>? body,bool showLoader = true}) {
+        var body,bool showLoader = true}) {
     if(showLoader) {
       AppToasts.toastLoading();
     }
     FocusManager.instance.primaryFocus?.unfocus(); //hide keyboard
     return getDio()
-        .post(endpoint, data: body, queryParameters: queryParameters);
+        .post(endpoint, data: body, queryParameters: queryParameters );
 
   }
 

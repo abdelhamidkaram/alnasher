@@ -1,7 +1,7 @@
+import 'package:alnsher/core/shared_widgets/img_view.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/model/home_model.dart';
-
+import 'package:alnsher/model/home_model.dart';
 import '../../../core/app_colors.dart';
 
 class AdsSlider extends StatefulWidget {
@@ -36,12 +36,7 @@ class _AdsSliderState extends State<AdsSlider> {
           },
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsetsDirectional.symmetric(horizontal: 8.0),
-            child: Container(
-              decoration:  BoxDecoration(
-                  image: DecorationImage(
-                      image: NetworkImage(widget.banners[index].image!),
-                      fit: BoxFit.cover)),
-            ),
+            child: ImgView(url: widget.banners[index].image!),
           ),
         ),
 

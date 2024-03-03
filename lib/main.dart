@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/bloc/home_bloc/home_cubit.dart';
-import 'package:listingapp/bloc/route/app_route.dart';
-import 'package:listingapp/core/theme.dart';
+import 'package:alnsher/bloc/home_bloc/home_cubit.dart';
+import 'package:alnsher/bloc/route/app_route.dart';
+import 'package:alnsher/core/theme.dart';
 import 'bloc_observer.dart';
+import 'core/app_colors.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  ErrorWidget.builder = (FlutterErrorDetails details) => Center(
+    child:Container(
+        color: AppColors.grey,
+        child: Icon(Icons.error , color: Colors.red,)),
+  );
+  await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   Bloc.observer = MyBlocObserver();
   runApp(const MyApp());
 }
@@ -19,6 +27,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+
     return ScreenUtilInit(
       designSize: const Size(393, 840),
       minTextAdapt: true,
@@ -41,10 +50,9 @@ class MyApp extends StatelessWidget {
                   Locale('en'), // english
                 ],
                 locale: const Locale('ar'),
-                title: 'Listing App ',
+                title: 'alnsher App',
                 theme: themeData(),
                 onGenerateRoute: AppRoute.onGenerateRoute,
-                builder: EasyLoading.init(),
               );
             },
           ),

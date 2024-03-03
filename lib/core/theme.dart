@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/core/app_colors.dart';
+import 'package:alnsher/core/app_colors.dart';
 
 ThemeData themeData() {
   return ThemeData(

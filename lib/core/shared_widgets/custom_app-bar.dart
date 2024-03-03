@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/core/app_colors.dart';
-import 'package:listingapp/core/shared_pref/app_shared_preferences.dart';
-import 'package:listingapp/core/utils/app_string.dart';
-import 'package:listingapp/core/utils/assets_manger.dart';
-import 'package:listingapp/model/user_model.dart';
+import 'package:alnsher/bloc/route/app_route.dart';
+import 'package:alnsher/bloc/route/navigator_args/base_navegator_args.dart';
+import 'package:alnsher/core/app_colors.dart';
+import 'package:alnsher/core/shared_pref/app_shared_preferences.dart';
+import 'package:alnsher/core/utils/app_string.dart';
+import 'package:alnsher/core/utils/assets_manger.dart';
+import 'package:alnsher/model/user_model.dart';
 
 PreferredSizeWidget customAppBar() {
-
   return PreferredSize(
     preferredSize: Size(double.infinity, 125.h),
     child: const AppBarContent(),
@@ -24,7 +25,8 @@ class AppBarContent extends StatefulWidget {
 }
 
 class _AppBarContentState extends State<AppBarContent> {
-  UserModel? user ;
+  UserModel? user;
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -33,31 +35,33 @@ class _AppBarContentState extends State<AppBarContent> {
           leadingWidth: 140.w,
           leading: Center(
             child: Builder(
-              builder: (context) {
-
-                AppSharedPreferences.getUser().then((value){
-                  setState(() {
-                    user = value;
+                builder: (context) {
+                  AppSharedPreferences.getUser().then((value) {
+                    setState(() {
+                      user = value;
+                    });
                   });
-                });
-                return Text(
-                  '${AppStrings.welcome} ${user?.firstName?? ''}',
-                  style: TextStyle(
-                    fontSize: 16.sp,
-                  ),
-                );
-              }
+                  return Text(
+                    '${AppStrings.welcome} ${user?.firstName ?? ''}',
+                    style: TextStyle(
+                      fontSize: 16.sp,
+                    ),
+                  );
+                }
             ),
           ),
           actions: [
-            IconButton(
-              onPressed: () {},
-              icon: Image.asset(ImagesManger.notificationIcon, width: 30.h),
-            ),
+
           ],
         ),
         GestureDetector(
-          onTap: (){},
+          onTap: () {
+            goTo(path: AppRouteStrings.search,
+                context: context,
+                replacement: false,
+                args: NoArgs()
+            );
+          },
           child: Container(
               color: AppColors.primaryColor,
               width: double.infinity,
@@ -70,16 +74,16 @@ class _AppBarContentState extends State<AppBarContent> {
                   color: AppColors.white,
                 ),
                 child: Padding(
-                  padding: EdgeInsetsDirectional.only(end: 10.w , start: 20.w),
-                  child:  Row(
+                  padding: EdgeInsetsDirectional.only(end: 10.w, start: 20.w),
+                  child: Row(
                     children: [
-                      Text(AppStrings.searchHint , style: TextStyle(
+                      Text(AppStrings.searchHint, style: TextStyle(
                           color: AppColors.textGrey,
-                        fontSize: 12.sp,
-                        fontWeight: FontWeight.w700
-                      )) ,
+                          fontSize: 12.sp,
+                          fontWeight: FontWeight.w700
+                      )),
                       const Spacer(),
-                      const Icon(Icons.search , color: AppColors.textGrey)
+                      const Icon(Icons.search, color: AppColors.textGrey)
                     ],
                   ),
                 ),

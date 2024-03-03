@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/bloc/login_bloc/login_cubit.dart';
-import 'package:listingapp/bloc/route/app_route.dart';
-import 'package:listingapp/bloc/route/navigator_args/base_navegator_args.dart';
-import 'package:listingapp/core/app_colors.dart';
-import 'package:listingapp/core/shared_widgets/custom_button.dart';
-import 'package:listingapp/core/utils/app_string.dart';
-import 'package:listingapp/core/utils/assets_manger.dart';
+import 'package:alnsher/bloc/login_bloc/login_cubit.dart';
+import 'package:alnsher/bloc/route/app_route.dart';
+import 'package:alnsher/bloc/route/navigator_args/base_navegator_args.dart';
+import 'package:alnsher/core/app_colors.dart';
+import 'package:alnsher/core/shared_widgets/custom_button.dart';
+import 'package:alnsher/core/utils/app_string.dart';
+import 'package:alnsher/core/utils/assets_manger.dart';
 import '../../bloc/login_bloc/requsets.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -51,21 +51,32 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(AppStrings.welcomeTo,
-                      style: Theme.of(context).textTheme.titleLarge),
-                  Text('"', style: Theme.of(context).textTheme.titleLarge),
+                      style: Theme
+                          .of(context)
+                          .textTheme
+                          .titleLarge),
+                  Text('"', style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleLarge),
                   Text(AppStrings.app,
-                      style: Theme.of(context)
+                      style: Theme
+                          .of(context)
                           .textTheme
                           .titleLarge!
                           .copyWith(color: AppColors.green)),
-                  Text('"', style: Theme.of(context).textTheme.titleLarge),
+                  Text('"', style: Theme
+                      .of(context)
+                      .textTheme
+                      .titleLarge),
                 ],
               ),
               SizedBox(
                 height: 28.h,
               ),
               Text('قم بتسجيل الدخول حتي ترا جميع الاعلانات',
-                  style: Theme.of(context)
+                  style: Theme
+                      .of(context)
                       .textTheme
                       .titleMedium!
                       .copyWith(fontWeight: FontWeight.normal)),
@@ -109,18 +120,36 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: () {
                   LoginCubit.get(context)
                       .getLogin(
-                          loginRequest: LoginRequest(
-                              password: passwordController.text,
-                              email: emailController.text))
-                      .then((value) => goTo(
-                          path: AppRouteStrings.home,
-                          context: context,
-                          replacement: true,
-                          args: NoArgs()));
+                    context: context,
+                      loginRequest: LoginRequest(
+                          password: passwordController.text,
+                          email: emailController.text))
+                      .then((value)
+                  {
+                            // goTo(
+                            //     path: AppRouteStrings.home,
+                            //     context: context,
+                            //     replacement: true,
+                            //     args: NoArgs());
+                          });
                 },
                 text: AppStrings.login,
                 color: AppColors.primaryColor,
-              )
+              ) ,
+
+              TextButton(
+                onPressed: () {
+                  goTo(
+                      path: AppRouteStrings.register,
+                      context: context,
+                      replacement: false,
+                      args: NoArgs());
+                },
+                child: const Text(
+                  'انشاء حساب جديد ',
+                  style: TextStyle(color: AppColors.green),
+                ),
+              ),
             ],
           ),
         ),
@@ -135,21 +164,21 @@ class CustomField extends StatefulWidget {
   final String label;
 
   final IconData? suffixIcon;
-
+  final int? minLines ;
   final bool isPassword;
 
   final bool isDisable;
 
   final TextEditingController controller;
 
-  const CustomField(
-      {super.key,
-      required this.inputType,
-      required this.label,
-      this.suffixIcon,
-      this.isPassword = false,
-      this.isDisable = false,
-      required this.controller});
+  const CustomField({super.key,
+    required this.inputType,
+    required this.label,
+    this.suffixIcon,
+    this.isPassword = false,
+    this.isDisable = false,
+    this.minLines,
+    required this.controller});
 
   @override
   State<CustomField> createState() => _CustomFieldState();
@@ -169,7 +198,7 @@ class _CustomFieldState extends State<CustomField> {
   Widget build(BuildContext context) {
     bool isEmailType = widget.inputType == TextInputType.emailAddress;
     return Container(
-      height: 65.h,
+      height: widget.minLines == null ?  65.h : 150.h,
       padding: EdgeInsetsDirectional.only(start: 16.w),
       decoration: BoxDecoration(
           color: AppColors.grey, borderRadius: BorderRadius.circular(12.r)),
@@ -177,7 +206,7 @@ class _CustomFieldState extends State<CustomField> {
         enabled: !widget.isDisable,
         onChanged: (value) {
           if (RegExp(
-                  r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
+              r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
               .hasMatch(value)) {
             setState(() {
               isValidEmail = true;
@@ -193,9 +222,13 @@ class _CustomFieldState extends State<CustomField> {
         keyboardType: widget.inputType,
         obscureText: passwordShow,
         controller: widget.controller,
+        maxLines:widget.minLines ?? 1 ,
         decoration: InputDecoration(
           label:
-              Text(widget.label, style: Theme.of(context).textTheme.labelSmall),
+          Text(widget.label, style: Theme
+              .of(context)
+              .textTheme
+              .labelSmall),
           border: InputBorder.none,
           suffixIcon: Builder(builder: (context) {
             if (widget.suffixIcon == null &&

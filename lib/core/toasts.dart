@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -22,8 +21,8 @@ class AppToasts {
   static toastError({
     required String msg,
   }) {
-
-    Fluttertoast.showToast(
+    hideLoading();
+    return Fluttertoast.showToast(
         msg: msg,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.BOTTOM,
@@ -32,20 +31,23 @@ class AppToasts {
         textColor: Colors.white,
         fontSize: 14.sp
     );
-    hideLoading();
+
   }
 
 
   static toastLoading() {
-    EasyLoading.instance.backgroundColor = Colors.transparent;
-    EasyLoading.instance.boxShadow = [];
-    EasyLoading.show(
-      dismissOnTap: false,
-      indicator: const CircularProgressIndicator.adaptive(),
+    Fluttertoast.showToast(
+        msg: '      Loading ...     ',
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.BOTTOM,
+        timeInSecForIosWeb: 3,
+        backgroundColor: AppColors.primaryColor,
+        textColor: Colors.white,
+        fontSize: 14.sp
     );
   }
   static hideLoading() {
-    EasyLoading.dismiss();
+    Fluttertoast.cancel();
   }
 
   static toastSuccess({required String msg}) =>

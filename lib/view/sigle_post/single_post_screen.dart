@@ -1,13 +1,14 @@
 import 'dart:io';
+import 'package:alnsher/core/shared_widgets/img_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/bloc/home_bloc/home_cubit.dart';
-import 'package:listingapp/core/app_colors.dart';
-import 'package:listingapp/core/toasts.dart';
-import 'package:listingapp/core/utils/assets_manger.dart';
-import 'package:listingapp/model/home_model.dart';
+import 'package:alnsher/bloc/home_bloc/home_cubit.dart';
+import 'package:alnsher/core/app_colors.dart';
+import 'package:alnsher/core/toasts.dart';
+import 'package:alnsher/core/utils/assets_manger.dart';
+import 'package:alnsher/model/home_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 import '../../core/shared_widgets/custom_app-bar.dart';
 
@@ -26,7 +27,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool? fav = HomeCubit.get(context).fav.any((e) => e==widget.ad.id);
+    bool? fav = HomeCubit.get(context).fav.any((e) => e == widget.ad.id);
 
     return Scaffold(
       appBar: customAppBar(),
@@ -47,21 +48,24 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                       });
                     },
                   ),
-                  items: widget.ad.imageList!.map((i) {
-                    return Builder(
-                      builder: (BuildContext context) {
-                        return Container(
-                          width: MediaQuery.of(context).size.width,
-                          margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                          decoration: BoxDecoration(
-                            image: DecorationImage(
-                                image: Image.network(i.image!).image,
-                                fit: BoxFit.cover),
-                          ),
-                        );
-                      },
-                    );
-                  }).toList(),
+                  items: widget.ad.imageList != null
+                      ? widget.ad.imageList!.map((i) {
+                          return Builder(
+                            builder: (BuildContext context) {
+                              return Container(
+                                width: MediaQuery.of(context).size.width,
+                                margin:
+                                    const EdgeInsets.symmetric(horizontal: 5.0),
+                                decoration: BoxDecoration(
+                                  image: DecorationImage(
+                                      image: Image.network(i.image!).image,
+                                      fit: BoxFit.cover),
+                                ),
+                              );
+                            },
+                          );
+                        }).toList()
+                      : [Text('')],
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.start,
@@ -74,18 +78,18 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                             onPressed: () {
                               HomeCubit.get(context)
                                   .changeFav(id: widget.ad.id!)
-                                  .then((value) {
-
-                              });
+                                  .then((value) {});
                             },
                             icon: Image.asset(
                               ImagesManger.favIcon,
-                              color: (fav == true ) ? Colors.red : null,
+                              color: (fav == true) ? Colors.red : null,
                             ));
                       }),
                     ),
                     ...List.generate(
-                        widget.ad.imageList!.length,
+                        widget.ad.imageList != null
+                            ? widget.ad.imageList!.length
+                            : 0,
                         (index) => Padding(
                               padding: EdgeInsets.symmetric(horizontal: 2.w),
                               child: index == current
@@ -108,7 +112,6 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                                       ),
                                     ),
                             )),
-
                   ],
                 )
               ],
@@ -123,7 +126,9 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                     child: ListView(
                       scrollDirection: Axis.horizontal,
                       children: List.generate(
-                          widget.ad.imageList!.length,
+                          widget.ad.imageList != null
+                              ? widget.ad.imageList!.length
+                              : 0,
                           (index) => Container(
                                 width: 85.h,
                                 height: 85.h,
@@ -197,20 +202,22 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      (widget.ad.whatsapp ==null) ?
-                           const SizedBox()
+                      (widget.ad.whatsapp == null)
+                          ? const SizedBox()
                           : contactButton(
-                              text: 'التواصل واتساب',
+                              imgUrl: ImagesManger.whatsapp,
+                              text: 'الواتساب',
                               onTap: () {
                                 whatsappUrl();
                               },
                               color: AppColors.green,
                               width: 180.w,
                             ),
-                      (widget.ad.phone  ==null )
+                      (widget.ad.phone == null)
                           ? const SizedBox()
                           : contactButton(
-                              text: 'التواصل هاتفيا',
+                              imgUrl: ImagesManger.phone,
+                              text: 'الهاتف',
                               onTap: () {
                                 callUrl();
                               },
@@ -231,7 +238,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
     );
   }
 
-  Widget contactButton({text, onTap, width, color}) {
+  Widget contactButton({text, onTap, width, color, imgUrl}) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
@@ -247,6 +254,7 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
+              ImgView(url: imgUrl),
               Text(
                 text,
                 style: Theme.of(context)

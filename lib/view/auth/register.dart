@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/bloc/route/app_route.dart';
-import 'package:listingapp/bloc/route/navigator_args/send_email_args.dart';
+import 'package:alnsher/bloc/route/app_route.dart';
+import 'package:alnsher/bloc/route/navigator_args/send_email_args.dart';
 
 import '../../bloc/login_bloc/login_cubit.dart';
 import '../../bloc/login_bloc/requsets.dart';
@@ -158,7 +158,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 text: AppStrings.gotoConfirm,
                 color: AppColors.primaryColor,
                 icon: Image.asset(ImagesManger.login, height: 20),
-              )
+              ),
+
+
             ],
           ),
         ),

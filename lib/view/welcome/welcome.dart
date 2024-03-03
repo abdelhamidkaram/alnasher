@@ -1,13 +1,14 @@
+import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/bloc/route/app_route.dart';
-import 'package:listingapp/bloc/route/navigator_args/base_navegator_args.dart';
-import 'package:listingapp/core/app_colors.dart';
-import 'package:listingapp/core/shared_pref/app_shared_preferences.dart';
-import 'package:listingapp/core/shared_widgets/custom_button.dart';
-import 'package:listingapp/core/utils/app_string.dart';
-import 'package:listingapp/core/utils/assets_manger.dart';
+import 'package:alnsher/bloc/route/app_route.dart';
+import 'package:alnsher/bloc/route/navigator_args/base_navegator_args.dart';
+import 'package:alnsher/core/app_colors.dart';
+import 'package:alnsher/core/shared_pref/app_shared_preferences.dart';
+import 'package:alnsher/core/shared_widgets/custom_button.dart';
+import 'package:alnsher/core/utils/app_string.dart';
+import 'package:alnsher/core/utils/assets_manger.dart';
 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
@@ -18,6 +19,7 @@ class WelcomeScreen extends StatefulWidget {
 
 class _WelcomeScreenState extends State<WelcomeScreen> {
   bool isLogin = true;
+
   @override
   void initState() {
     super.initState();
@@ -47,22 +49,19 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
             ),
             Builder(
               builder: (context) {
-                AppSharedPreferences.isLogin().then((value){
-                  isLogin = value ;
+                AppSharedPreferences.isLogin().then((value) {
+                  isLogin = value;
                 });
                 if (isLogin) {
                   return Builder(
                     builder: (context) {
-                      Future.delayed(
-                        const Duration(seconds: 3),
-                            () {
-                          goTo(
-                              path: AppRouteStrings.home,
-                              context: context,
-                              replacement: true,
-                              args: NoArgs());
-                        },
-                      );
+                      Timer(const Duration(seconds: 3), () {
+                        goTo(
+                            path: AppRouteStrings.home,
+                            context: context,
+                            replacement: true,
+                            args: NoArgs());
+                      });
                       return const CircularProgressIndicator.adaptive(
                         backgroundColor: AppColors.green,
                       );
@@ -94,6 +93,22 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                         },
                         noColor: true,
                       ),
+                      TextButton(
+                        onPressed: () {
+                          goTo(
+                              path: AppRouteStrings.home,
+                              context: context,
+                              replacement: false,
+                              args: NoArgs());
+                        },
+                        child: Text(
+                          ' الدخول كزائر ',
+                          style: TextStyle(
+                              color: AppColors.green,
+                              fontWeight: FontWeight.w800,
+                              fontSize: 16.sp),
+                        ),
+                      ),
                     ],
                   );
                 }
@@ -105,4 +120,3 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
     );
   }
 }
-

@@ -1,12 +1,13 @@
 import 'package:blurrycontainer/blurrycontainer.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:listingapp/bloc/route/app_route.dart';
-import 'package:listingapp/bloc/route/navigator_args/base_navegator_args.dart';
-import 'package:listingapp/bloc/route/navigator_args/single_post_navigation_args.dart';
-import 'package:listingapp/core/app_colors.dart';
-import 'package:listingapp/core/utils/assets_manger.dart';
-import 'package:listingapp/model/home_model.dart';
+import 'package:alnsher/bloc/home_bloc/home_cubit.dart';
+import 'package:alnsher/bloc/route/app_route.dart';
+import 'package:alnsher/bloc/route/navigator_args/single_post_navigation_args.dart';
+import 'package:alnsher/core/app_colors.dart';
+import 'package:alnsher/core/utils/assets_manger.dart';
+import 'package:alnsher/model/home_model.dart';
 
 class AdsItemBuilder extends StatefulWidget {
   final Ad ad;
@@ -35,9 +36,8 @@ class _AdsItemBuilderState extends State<AdsItemBuilder> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(5.r),
           image: DecorationImage(
-            image: Image.network(widget.ad.mainImage?.image ??
-                    'https://via.placeholder.com/169x172')
-                .image,
+            image: CachedNetworkImageProvider(widget.ad.mainImage?.image ??
+                'https://via.placeholder.com/169x172'),
             fit: BoxFit.cover,
           ),
           border: Border.all(color: Colors.grey.withOpacity(0.2) , width: 1),
@@ -53,7 +53,7 @@ class _AdsItemBuilderState extends State<AdsItemBuilder> {
                 ImagesManger.favIcon,
                 width: 20.w,
                 height: 20.w,
-                    color: AppColors.grey,
+                    color: HomeCubit.get(context).fav.any((element) => element == widget.ad.id!)? Colors.red : AppColors.grey,
               )),
               BlurryContainer(
                 blur: 15,

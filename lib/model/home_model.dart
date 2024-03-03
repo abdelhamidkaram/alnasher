@@ -125,6 +125,8 @@ class HomeBanner {
   String? title;
   String? des;
   String? image;
+  String? phone;
+  String? whatsapp;
 
   HomeBanner({this.id, this.title, this.des, this.image});
 
@@ -132,7 +134,7 @@ class HomeBanner {
     id = json['id'];
     title = json['title'];
     des = json['des'];
-    image = json['image'];
+    image = json['image']??'44';
   }
 
   Map<String, dynamic> toJson() {
