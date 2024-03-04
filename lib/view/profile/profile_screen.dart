@@ -9,6 +9,7 @@ import 'package:alnsher/core/app_colors.dart';
 import 'package:alnsher/core/shared_pref/app_shared_preferences.dart';
 import 'package:alnsher/core/utils/assets_manger.dart';
 
+import '../../core/shared_widgets/custom_button.dart';
 import '../../model/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -29,6 +30,30 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    if( AppSharedPreferences.TOKEN.isEmpty) {
+
+      return Center(
+        child: Padding(
+          padding: EdgeInsets.all(16),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text('يجب تسجيل حساب جديد او تسجيل الدخول من أجل نشر إعلاناتك '),
+              SizedBox(height: 20.h,),
+              CustomButton(
+                onTap: (){
+                  goTo(path: AppRouteStrings.login, context: context, replacement: false, args: NoArgs());
+                },
+                text: 'تسجيل الدخول ',
+                color: AppColors.primaryColor,
+                width: 200.w,
+              ),
+            ],
+          ),
+        ),
+      );
+    }
     return Column(
       children: [
         ListTile(

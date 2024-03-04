@@ -36,10 +36,9 @@ class HomeCubit extends Cubit<HomeState> {
           banners = data.dataResponse!.banner!;
           categories = data.dataResponse!.category!;
           ads = data.dataResponse!.ads!;
-          if(AppSharedPreferences.token.isNotEmpty){
+          if(AppSharedPreferences.TOKEN.isNotEmpty){
             getAllFav().then((value)
             {
-
               emit(GetHomeSuccess());
             });
           }

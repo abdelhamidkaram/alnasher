@@ -1,3 +1,4 @@
+import 'package:alnsher/core/shared_pref/app_shared_preferences.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -24,7 +25,7 @@ class _CustomBottomNavBarState extends State<CustomBottomNavBar> {
       listener: (context, state) => HomeCubit(),
       child: BottomNavigationBar(
         onTap: (value) => setState(() {
-          if (value == 3) {
+                 if (value == 3) {
             current = value;
             goTo(
                 path: AppRouteStrings.search,

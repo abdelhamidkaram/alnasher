@@ -8,7 +8,7 @@ import '../utils/constant.dart';
 
 class AppSharedPreferences {
   static int id = -1;
-  static String token = "";
+  static String TOKEN = "";
 
   static Future<void> setKey(String key, String value) async {
     final preferences = await SharedPreferences.getInstance();
@@ -19,6 +19,7 @@ class AppSharedPreferences {
     final preferences = await SharedPreferences.getInstance();
     await preferences.setInt(AppConstants.ID, user.id!);
     await preferences.setString(AppConstants.TOKEN, token);
+    TOKEN = token;
     await preferences.setString(AppConstants.USER, jsonEncode(user.toJson()));
   }
 

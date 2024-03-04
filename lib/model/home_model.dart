@@ -13,15 +13,7 @@ class HomeModel {
         : null;
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['status'] = status;
-    data['message'] = message;
-    if (dataResponse != null) {
-      data['data_response'] = dataResponse!.toJson();
-    }
-    return data;
-  }
+
 }
 
 class DataResponse {
@@ -56,19 +48,7 @@ class DataResponse {
     }
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    if (user != null) {
-      data['user'] = user!.toJson();
-    }
-    if (banner != null) {
-      data['banner'] = banner!.map((v) => v.toJson()).toList();
-    }
-    if (category != null) {
-      data['category'] = category!.map((v) => v.toJson()).toList();
-    }
-    return data;
-  }
+
 }
 
 class User {
@@ -127,24 +107,20 @@ class HomeBanner {
   String? image;
   String? phone;
   String? whatsapp;
+  String? description;
 
-  HomeBanner({this.id, this.title, this.des, this.image});
+  HomeBanner({this.id, this.title, this.des, this.image , this.whatsapp , this.phone , this.description});
 
   HomeBanner.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     title = json['title'];
     des = json['des'];
-    image = json['image']??'44';
+    image = json['image'];
+    description = json['description'];
+    phone = json['phone'];
+    whatsapp = json['whatsapp'];
   }
 
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data['id'] = id;
-    data['title'] = title;
-    data['des'] = des;
-    data['image'] = image;
-    return data;
-  }
 }
 
 class HomeCategory {
@@ -190,6 +166,7 @@ class Ad {
   String? phone;
   String? whatsapp;
   String? lat;
+  String? des;
   String? expireAt;
   String? active;
   MainImage? mainImage;
@@ -206,6 +183,7 @@ class Ad {
         this.phone,
         this.whatsapp,
         this.lat,
+        this.des,
         this.expireAt,
         this.active,
         this.mainImage,
@@ -222,6 +200,7 @@ class Ad {
     phone = json['phone'];
     whatsapp = json['whatsapp'];
     lat = json['lat'];
+    des = json['des'];
     expireAt = json['expire_at'];
     active = json['active'];
     mainImage = json['main_image'] != null
@@ -247,6 +226,7 @@ class Ad {
     data['phone'] = phone;
     data['whatsapp'] = whatsapp;
     data['lat'] = lat;
+    data['des'] = des;
     data['expire_at'] = expireAt;
     data['active'] = active;
     if (mainImage != null) {

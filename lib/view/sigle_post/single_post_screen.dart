@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:alnsher/core/shared_widgets/img_view.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -185,16 +184,13 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
                     height: 16.h,
                   ),
                   Text(
-                    'تفاصيل اكثر',
+                    ' تفاصيل الاعلان',
                     style: Theme.of(context).textTheme.titleMedium,
                   ),
                   SizedBox(
                     height: 16.h,
                   ),
-                  const Text(
-                      ''' موقع حيوي بـ الشروق في مربع الوزراء ، دقائق من مدينتي طلعت مصطفي
-موقع حيوي بـ الشروق في
-موقع حيوي بـ الشروق في مربع الوزراء ، دقائق من مدينتي طلعت مصطفي''',
+                   Text(widget.ad.des ??'',
                       maxLines: 5),
                   SizedBox(
                     height: 25.h,
@@ -254,7 +250,10 @@ class _SinglePostScreenState extends State<SinglePostScreen> {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              ImgView(url: imgUrl),
+              Image.asset(imgUrl, color: Colors.white, height: 25.h),
+              SizedBox(
+                width: 10.w,
+              ),
               Text(
                 text,
                 style: Theme.of(context)

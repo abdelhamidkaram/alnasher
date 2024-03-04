@@ -9,6 +9,7 @@ import 'package:alnsher/view/home/create_ad.dart';
 import 'package:alnsher/view/home/widgets/ads_slider.dart';
 import 'package:alnsher/view/profile/profile_screen.dart';
 import 'package:alnsher/view/search/search_screen.dart';
+import '../../core/shared_pref/app_shared_preferences.dart';
 import '../../core/shared_widgets/ads_item_builder.dart';
 import '../../core/shared_widgets/custom_app-bar.dart';
 import '../../core/shared_widgets/cats_item_builder.dart';
@@ -23,7 +24,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-
   @override
   Widget build(BuildContext context) {
     List<HomeCategory> cats = HomeCubit.get(context).categories;
@@ -54,18 +54,17 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   ...List.generate(
                       cats.length,
-                          (index) => Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          titleView(title: cats[index].name),
-                          SizedBox(
-                            height: 192.h,
-                            child: adsListView(cats[index].ads!),
-                          ),
-                        ],
-                      )),
-
+                      (index) => Column(
+                            mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              titleView(title: cats[index].name),
+                              SizedBox(
+                                height: 192.h,
+                                child: adsListView(cats[index].ads!),
+                              ),
+                            ],
+                          )),
                 ],
               ),
             ),
@@ -73,35 +72,33 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       const BannersScreen(),
-      const CreateAd(),
+      const CreateAd() ,
       const SearchScreen(),
       const ProfileScreen(),
     ];
     return BlocConsumer<HomeCubit, HomeState>(
-  listener: (context, state)=>HomeCubit(),
-  builder: (context, state) {
-    return RefreshIndicator(
-      onRefresh: () => HomeCubit.get(context).getHomeResponse().whenComplete((){
-        setState(() {
-
-        });
-      }),
-      child: BlocBuilder<HomeCubit, HomeState>(
-  builder: (context, state) {
-    return BlocListener<HomeCubit , HomeState>(
-  listener: (context, state) =>HomeCubit(),
-  child: Scaffold(
-        appBar: customAppBar(),
-        bottomNavigationBar:  const CustomBottomNavBar(),
-        body: screens[HomeCubit.get(context).currentIndex],
-      ),
-);
-  },
-),
+      listener: (context, state) => HomeCubit(),
+      builder: (context, state) {
+        return RefreshIndicator(
+          onRefresh: () =>
+              HomeCubit.get(context).getHomeResponse().whenComplete(() {
+            setState(() {});
+          }),
+          child: BlocBuilder<HomeCubit, HomeState>(
+            builder: (context, state) {
+              return BlocListener<HomeCubit, HomeState>(
+                listener: (context, state) => HomeCubit(),
+                child: Scaffold(
+                  appBar: customAppBar(),
+                  bottomNavigationBar: const CustomBottomNavBar(),
+                  body: screens[HomeCubit.get(context).currentIndex],
+                ),
+              );
+            },
+          ),
+        );
+      },
     );
-  },
-);
-
   }
 
   ListView adsListView(List<Ad> ads) {
@@ -147,14 +144,18 @@ class _HomeScreenState extends State<HomeScreen> {
             children: List.generate(
                 (cats.length > 12) ? 12 : cats.length,
                 (index) => CatsItemBuilder(
-                  index: index,
+                      index: index,
                       homeCategory: cats[index],
                     )),
           ),
         ),
         TextButton(
             onPressed: () {
-              Navigator.push(context, MaterialPageRoute(builder: (context) => const  Categories(),));
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const Categories(),
+                  ));
             },
             child: Text(
               ' عرض جميع الأقسام... ',
