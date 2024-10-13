@@ -22,6 +22,7 @@ class ApiEndPoints {
   static String home = 'home';
   static String getPopular = 'getPopular';
   static String getAll = 'getAll';
+  static String cats = 'cats';
 
   // fav =================================
   static String fav = 'fav_ads';

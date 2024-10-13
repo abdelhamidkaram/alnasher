@@ -20,7 +20,7 @@ class CatsItemBuilder extends StatelessWidget {
       onTap: () => Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => Categories(current: index),
+            builder: (context) => Categories(current: index,),
           )),
       child: Container(
         width: 90.h,
@@ -30,14 +30,20 @@ class CatsItemBuilder extends StatelessWidget {
             width: 70.h,
             height: 70.h,
             decoration: BoxDecoration(
-              image: DecorationImage(image: NetworkImage(homeCategory.image!) , fit: BoxFit.cover),
+              image: DecorationImage(image: NetworkImage(homeCategory.image!) , fit: BoxFit.contain),
               shape: BoxShape.circle,
               border: Border.all(color: AppColors.primaryColor,
               )
 
             ),
           ) , 
-          Text(homeCategory.name!)
+          Text(homeCategory.name!, style: TextStyle(
+            fontSize: 12.sp,
+
+          ),
+          maxLines: 1,
+            overflow: TextOverflow.ellipsis,
+          )
         ]),
       ),
     );

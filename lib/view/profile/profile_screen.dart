@@ -1,3 +1,4 @@
+import 'package:alnsher/core/utils/constant.dart';
 import 'package:alnsher/view/profile/admin_panel.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -27,11 +28,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
     super.initState();
     AppSharedPreferences.getUser().then((value) => user = value);
   }
-
+  bool isLogin = false ;
   @override
   Widget build(BuildContext context) {
-
-    if( AppSharedPreferences.TOKEN.isEmpty) {
+    AppSharedPreferences.isLogin().then((value) {
+      isLogin = value;
+    });
+    if( isLogin) {
 
       return Center(
         child: Padding(
@@ -106,6 +109,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
           title: const Text(' الدعم الفني '),
           onTap: () => goTo(
               path: AppRouteStrings.suport,
+              context: context,
+              replacement: false,
+              args: NoArgs()),
+        ),
+        ListTile(
+          leading: Icon(Icons.wallet),
+          trailing: const Icon(Icons.arrow_forward_ios),
+          title: const Text('المحفظة'),
+          onTap: () => goTo(
+              path: AppRouteStrings.wallet,
               context: context,
               replacement: false,
               args: NoArgs()),

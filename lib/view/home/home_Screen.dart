@@ -9,7 +9,6 @@ import 'package:alnsher/view/home/create_ad.dart';
 import 'package:alnsher/view/home/widgets/ads_slider.dart';
 import 'package:alnsher/view/profile/profile_screen.dart';
 import 'package:alnsher/view/search/search_screen.dart';
-import '../../core/shared_pref/app_shared_preferences.dart';
 import '../../core/shared_widgets/ads_item_builder.dart';
 import '../../core/shared_widgets/custom_app-bar.dart';
 import '../../core/shared_widgets/cats_item_builder.dart';
@@ -44,7 +43,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   SizedBox(
                     height: 5.h,
                   ),
-                  categoriesListView(cats),
+                  CategoriesListView(context: context, cats: cats.where((cat)=> cat.isSubCategory == false).toList()),
                   SizedBox(
                     height: 5.h,
                   ),
@@ -133,7 +132,22 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  Column categoriesListView(List<HomeCategory> cats) {
+}
+
+class CategoriesListView extends StatelessWidget {
+  const CategoriesListView({
+    super.key,
+    required this.context,
+    required this.cats,
+    this.isShowAllButton = true ,
+  });
+
+  final BuildContext context;
+  final List<HomeCategory> cats;
+  final bool isShowAllButton ;
+
+  @override
+  Widget build(BuildContext context) {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -149,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     )),
           ),
         ),
-        TextButton(
+        isShowAllButton ? TextButton(
             onPressed: () {
               Navigator.push(
                   context,
@@ -163,7 +177,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: AppColors.primaryColor,
                   fontWeight: FontWeight.w800,
                   fontSize: 16.sp),
-            )),
+            )): SizedBox(),
       ],
     );
   }

@@ -16,6 +16,7 @@ class DioHelper {
           baseUrl: ApiEndPoints.baseUrl,
           headers: {
             "Accept": "application/json",
+
           },
           connectTimeout: const Duration(seconds: 60),
           sendTimeout: const Duration(seconds: 60),
@@ -23,7 +24,8 @@ class DioHelper {
         ),
       );
       dio!.interceptors.add(DioInterceptor());
-      dio!.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
+      dio!.interceptors.add(InterceptorsWrapper(
+          onRequest: (options, handler) {
         if (kDebugMode) {
           print("Api-Url (${options.method}) ${options.uri}");
           print("Api-handler ${options.headers}");
@@ -57,9 +59,11 @@ class DioHelper {
   }
 
   static Future<Response> getData(
-      {required String endpoint, Map<String, dynamic>? queryParameters,bool showLoader = true}) {
+      {required String endpoint,
+      Map<String, dynamic>? queryParameters,
+      bool showLoader = true}) {
     FocusManager.instance.primaryFocus?.unfocus(); //hide keyboard
-    if(showLoader) {
+    if (showLoader) {
       AppToasts.toastLoading();
     }
     return getDio().get(endpoint, queryParameters: queryParameters);
@@ -67,22 +71,23 @@ class DioHelper {
 
   static Future<Response> postData(
       {required String endpoint,
-        Map<String, dynamic>? queryParameters,
-        var body,bool showLoader = true}) {
-    if(showLoader) {
+      Map<String, dynamic>? queryParameters,
+      var body,
+      bool showLoader = true}) {
+    if (showLoader) {
       AppToasts.toastLoading();
     }
     FocusManager.instance.primaryFocus?.unfocus(); //hide keyboard
     return getDio()
-        .post(endpoint, data: body, queryParameters: queryParameters );
-
+        .post(endpoint, data: body, queryParameters: queryParameters);
   }
 
   static Future<Response> putData(
       {required String endpoint,
-        Map<String, dynamic>? queryParameters,
-        Map<String, dynamic>? body,bool showLoader = true}) {
-    if(showLoader) {
+      Map<String, dynamic>? queryParameters,
+      Map<String, dynamic>? body,
+      bool showLoader = true}) {
+    if (showLoader) {
       AppToasts.toastLoading();
     }
     FocusManager.instance.primaryFocus?.unfocus(); //hide keyboard

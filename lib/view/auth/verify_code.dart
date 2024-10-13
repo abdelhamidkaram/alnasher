@@ -113,7 +113,7 @@ class _VerifyCodeScreenState extends State<VerifyCodeScreen> {
                           ),
                         )
                         .then((value) => goTo(
-                            path: AppRouteStrings.home,
+                            path: AppRouteStrings.pay,
                             context: context,
                             replacement: true,
                             args: NoArgs()));

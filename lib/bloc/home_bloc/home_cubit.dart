@@ -1,3 +1,4 @@
+import 'package:alnsher/model/cats_model.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:alnsher/bloc/route/app_route.dart';
@@ -32,24 +33,27 @@ class HomeCubit extends Cubit<HomeState> {
     emit(GetHomeLoading());
     return DioHelper.getData(endpoint: ApiEndPoints.home)
         .then((value) {
-          HomeModel data = HomeModel.fromJson(value.data);
-          banners = data.dataResponse!.banner!;
-          categories = data.dataResponse!.category!;
-          ads = data.dataResponse!.ads!;
+          DioHelper.getData(endpoint: ApiEndPoints.cats , showLoader: false).then((value){
+            categories = ResponseModel.fromJson(value.data).dataResponse;
+            print('cats length : ' + categories.length.toString());
+          });
+            HomeModel data = HomeModel.fromJson(value.data);
+            banners = data.dataResponse!.banner!;
+            ads = data.dataResponse!.ads!;
           if(AppSharedPreferences.TOKEN.isNotEmpty){
             getAllFav().then((value)
             {
               emit(GetHomeSuccess());
             });
           }
-
     }).catchError((err){
-      debugPrint(err.toString());
+      print(err.toString());
+
     });
 
 
   }
-  
+
   Future getAllFav()async {
     emit(GetMyFavLoading());
     DioHelper.getData(endpoint: ApiEndPoints.allFav  ).then((value){

@@ -41,7 +41,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           children: [
             Image.asset(
               ImagesManger.logo,
-              height: 100.h,
+              width: 230.w,
             ),
             SizedBox(
               width: double.infinity,
@@ -55,7 +55,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 if (isLogin) {
                   return Builder(
                     builder: (context) {
-                      Timer(const Duration(seconds: 3), () {
+                      Timer(const Duration(seconds: 7), () {
                         goTo(
                             path: AppRouteStrings.home,
                             context: context,

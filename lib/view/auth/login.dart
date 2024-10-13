@@ -39,12 +39,12 @@ class _LoginScreenState extends State<LoginScreen> {
             children: [
               const Row(
                 children: [
-                  BackButton(color: AppColors.primaryColor),
+                  BackButton(color: AppColors.primaryColor ),
                 ],
               ),
-              Image.asset(ImagesManger.logoDark, height: 100.h),
+              Image.asset(ImagesManger.logoDark , width: 220.w,),
               SizedBox(
-                height: 34.h,
+                height: 5.h,
                 width: double.infinity,
               ),
               Row(

@@ -42,9 +42,9 @@ class _ResetPasswordScreenState extends State<ResetPasswordScreen> {
                   BackButton(color: AppColors.primaryColor),
                 ],
               ),
-              Image.asset(ImagesManger.logoDark, height: 100.h),
+              Image.asset(ImagesManger.logoDark , width: 220.w,),
               SizedBox(
-                height: 34.h,
+                height: 5.h,
                 width: double.infinity,
               ),
               Row(

@@ -1,3 +1,5 @@
+import 'package:alnsher/view/pay_screen.dart';
+import 'package:alnsher/view/profile/walit.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:alnsher/bloc/login_bloc/login_cubit.dart';
@@ -34,12 +36,14 @@ class AppRouteStrings {
   static const String verify = "/verify";
   static const String search = "/search";
   static const String singlePost = "/singlePost";
+  static const String pay = "/pay";
 
   // Profile
   static const String fav = "/vaf";
   static const String policy = "/policy";
   static const String aboutUs = "/aboutUs";
   static const String suport = "/suport";
+  static const String wallet = "/wallet";
   static const String myAds = "/myAds";
 }
 
@@ -97,6 +101,16 @@ class AppRoute {
           },
         );
 
+        case AppRouteStrings.pay:
+        return MaterialPageRoute(
+          builder: (context) {
+            return BlocProvider(
+              create: (context) => LoginCubit(),
+              child: PayScreen(),
+            );
+          },
+        );
+
 //Home
       case AppRouteStrings.home:
         return MaterialPageRoute(
@@ -124,6 +138,13 @@ class AppRoute {
         return MaterialPageRoute(
           builder: (context) {
             return const MyAds();
+          },
+        );
+
+        case AppRouteStrings.wallet:
+        return MaterialPageRoute(
+          builder: (context) {
+            return const WalletScreen();
           },
         );
 

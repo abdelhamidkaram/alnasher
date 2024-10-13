@@ -128,21 +128,26 @@ class HomeCategory {
   String? name;
   String? image;
   String? show;
+  bool? isSubCategory;
   List<Ad>? ads;
+  HomeCategory? mainCat;
 
-  HomeCategory({this.id, this.name, this.image, this.show, this.ads});
+  HomeCategory({this.id, this.name, this.image, this.show, this.ads , this.isSubCategory , this.mainCat});
 
   HomeCategory.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     image = json['image'];
     show = json['show'];
+    mainCat = json['main_cat_list'] != null ?  HomeCategory.fromJson(json['main_cat_list']): null ;
+    isSubCategory = json['this_main_cat'];
     if (json['ads'] != null) {
       ads = <Ad>[];
       json['ads'].forEach((v) {
         ads!.add(Ad.fromJson(v));
       });
     }
+
   }
 
   Map<String, dynamic> toJson() {
@@ -151,9 +156,12 @@ class HomeCategory {
     data['name'] = name;
     data['image'] = image;
     data['show'] = show;
+    data['this_main_cat'] = isSubCategory;
     if (ads != null) {
       data['ads'] = ads!.map((v) => v.toJson()).toList();
     }
+    data['main_cat_list'] = mainCat;
+
     return data;
   }
 }
@@ -269,7 +277,7 @@ class Cats {
   int? id;
   String? name;
   String? image;
-  String? parentId;
+  int? parentId;
   String? createdAt;
   String? updatedAt;
   String? deletedAt;
