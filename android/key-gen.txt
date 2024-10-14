@@ -1,0 +1,5 @@
+pass : Aa.@#2025
+name : abdelhamid
+organization name : motkaml 
+city : cairo
+state: cairo 
