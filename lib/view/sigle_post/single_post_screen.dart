@@ -1,6 +1,6 @@
 import 'dart:io';
 import 'package:carousel_slider/carousel_slider.dart';
-import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' ;
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:alnsher/bloc/home_bloc/home_cubit.dart';
@@ -21,7 +21,7 @@ class SinglePostScreen extends StatefulWidget {
 }
 
 class _SinglePostScreenState extends State<SinglePostScreen> {
-  CarouselController sliderController = CarouselController();
+  CarouselSliderController sliderController = CarouselSliderController();
   int current = 0;
 
   @override
